@@ -1,0 +1,11 @@
+.registerForm {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 92vh;
+}
+
+.buttonStyle{
+  float: left;
+  margin-left: 5vh;
+}

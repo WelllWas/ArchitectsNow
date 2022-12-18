@@ -1,0 +1,39 @@
+.buttonStyle{
+    background-color: #0057a8;
+    float: right;
+    font-size: 10px;
+    width: 90px;
+    color: white;
+}
+
+.tableStyle{
+    width: 80%;
+    align-items: center;
+    margin: auto;
+}
+
+.actionBtn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.theadStyle{
+    background-color: #0057a8;
+    color: white;
+}
+
+.bodyStyle{
+    background-color: #dbdbdb;
+    color: black;
+}
+
+.iconStyle{
+    margin-right: 3px;
+}
+
+td{
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }

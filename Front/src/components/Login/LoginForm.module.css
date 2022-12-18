@@ -1,0 +1,20 @@
+.buttons {
+    display: flex;
+    float: right;
+}
+
+.formDiv {
+    width: 50%;
+    margin: auto;
+    border-radius: 8px;
+    padding: 10px;
+    font-weight: 500;
+    box-shadow: 5px 5px 1px 3px #191970;
+    outline: 3px solid #191970;
+    background-color: #0074A6;
+}
+
+.hyperlink:hover{
+    cursor: pointer;
+    color: #191970;
+}
