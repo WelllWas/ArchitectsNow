@@ -12,7 +12,7 @@ const Private = ({ Item }) =>{
     return signed > 0 ? <Item /> : <Login />
 }
 
-const Router = () => {
+export default function Router(){
     return(
         <BrowserRouter>
             <Fragment>
@@ -27,5 +27,3 @@ const Router = () => {
         </BrowserRouter>
     )
 }
-
-export default Router;
