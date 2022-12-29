@@ -19,6 +19,7 @@ type AuthContextType = {
   user: User | undefined;
   signIn: (props: SignIn) => void;
   signOut: () => void;
+  signed: any;
 }
 
 export const AuthContext = createContext({} as AuthContextType);
