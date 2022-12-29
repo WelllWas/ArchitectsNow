@@ -41,7 +41,7 @@ export default function LoginForm() {
                 <form onSubmit={handleSubmit(login)}>
                     <div className="form-group">
                         <label htmlFor='inputEmail'>Email</label>
-                        <input required {...register("email")} className="form-control" id="inputEmail" aria-describedby="emailHelp" />
+                        <input required type="email" {...register("email")} className="form-control" id="inputEmail" aria-describedby="emailHelp" />
                     </div>
                     <div className="form-group">
                         <label htmlFor='inputPassword'>Senha</label>
