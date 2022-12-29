@@ -4,20 +4,20 @@ import Login  from "../pages/Login/Login";
 import Home from "../pages/Home/Home";
 import Register from "../pages/Register/Register";
 import Requests from "../pages/Requests/Requests";
-import useAuth from "../Authorization/UseAuth";
+import useAuth from "./UseAuth";
 import React from 'react';
 
-const Private = ({ Item }) =>{
+const Private = ({ Item }:any) =>{
     const {signed} = useAuth();
     return signed > 0 ? <Item /> : <Login />
 }
 
-const Router = () => {
+export default function Router(){
     return(
         <BrowserRouter>
             <Fragment>
                 <Routes>
-                    <Route exact path="/" element={<Private Item={Home}/>} />
+                    <Route path="/" element={<Private Item={Home}/>} />
                     <Route path="/login" element={<Login/>} />
                     <Route path="/register" element={<Register/>}/>
                     <Route path="/requests" element={<Private Item={Requests}/>}/>
@@ -27,5 +27,3 @@ const Router = () => {
         </BrowserRouter>
     )
 }
-
-export default Router;

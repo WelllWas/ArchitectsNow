@@ -1,8 +1,8 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-/projectarchitectsnow/node_modules
-/projectarchitectsnow/dist
-/architects-now-backend/node_modules
-/architects-now-backend/dist
+/Front/node_modules
+/Front/dist
+/Back/node_modules
+/Back/dist
 
 
 # dependencies
