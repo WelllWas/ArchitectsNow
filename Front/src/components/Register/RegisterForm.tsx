@@ -37,15 +37,15 @@ export default function RegisterForm() {
                 <form onSubmit={handleSubmit(login)}>
                     <div className="form-group">
                         <label htmlFor='inputName'>Nome</label>
-                        <input required {...register("name")} className="form-control" id="inputName" aria-describedby="nameHelp" />
+                        <input type="text" minLength={3} required {...register("name")} className="form-control" id="inputName" aria-describedby="nameHelp" />
                     </div>
                     <div className="form-group">
                         <label htmlFor='inputEmail'>Email</label>
-                        <input required {...register("email")} className="form-control" id="inputEmail" aria-describedby="emailHelp" />
+                        <input required type="email"{...register("email")} className="form-control" id="inputEmail" aria-describedby="emailHelp" />
                     </div>
                     <div className="form-group">
                         <label htmlFor='inputPassword'>Senha</label>
-                        <input required {...register("password")} type="password" className="form-control" id="inputPassword" aria-describedby="passwordHelp" />
+                        <input required type="password" minLength={6} {...register("password")} className="form-control" id="inputPassword" aria-describedby="passwordHelp" />
                     </div>
                     <div className="form-group">
                         <label htmlFor='inputPhone'>Telefone</label>
@@ -62,7 +62,7 @@ export default function RegisterForm() {
                     </div>
                     <div className="form-group">
                         <label htmlFor='inputAge'>Idade</label>
-                        <input required type="number" {...register("age")} className="form-control" min="1" max="120" id="inputAge" aria-describedby="ageHelp" />
+                        <input required type="number" {...register("age")} className="form-control" min="18" max="120" id="inputAge" aria-describedby="ageHelp" />
                     </div>
                     <div className="form-group">
                         <div>
