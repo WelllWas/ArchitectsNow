@@ -1,17 +1,15 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import styles from "./ClientModal.module.css";
+import {DeleteReqs} from '../../../services/Requisitions/DeleteReq';
+import {UpdateReqs} from '../../../services/Requisitions/UpdateReq';
 import React from 'react';
-import DeleteRequisitions from '../../../services/Requisitions/DeleteReq';
-import UpdateRequisitions from '../../../services/Requisitions/UpdateReq';
 
 export default function ClientModal(props: any) {
-    const controllerDelete = new DeleteRequisitions();
-    const controllerUpdate = new UpdateRequisitions();
     const requisition = props.requisition;
     const client = props.client;
 
     async function deleteRequest() {
-        await controllerDelete.DeleteReqs(requisition);
+        await DeleteReqs(requisition);
         props.setTrigger();
         window.location.reload();
     }
@@ -23,7 +21,7 @@ export default function ClientModal(props: any) {
         else
             params = { id: requisition.id, body: { status: "Declined" } }
 
-        await controllerUpdate.UpdateReqs(params);
+        await UpdateReqs(params);
         props.setTrigger();
         window.location.reload();
     }

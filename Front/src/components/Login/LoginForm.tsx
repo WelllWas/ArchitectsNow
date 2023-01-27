@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import useAuth from '../../Authorization/UseAuth';
 import { useNavigate } from 'react-router-dom';
 import styles from './LoginForm.module.css'
-import LoginUser from '../../services/Login/LoginUser';
+import {Login} from '../../services/Login/LoginUser';
 import React, { useState } from 'react';
 import ErrorModal from '../Modal/ErrorModal/ErrorModal';
 
@@ -13,14 +13,13 @@ export default function LoginForm() {
     const [error, setError] = useState();
     const { signIn } = useAuth();
     const navigate = useNavigate();
-    const controller = new LoginUser();
 
     function toggleModal() {
         setModal(!modal);
     }
 
     const login = async (data: any) => {
-        const response = await controller.Login(data);
+        const response = await Login(data);
         if (response.data.statusCode == 200) {
             signIn(response.data.body);
             navigate("/Home");

@@ -2,16 +2,15 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import styles from "./EditReqModal.module.css";
 import { useForm } from 'react-hook-form';
 import React, { useEffect, useState } from 'react';
-import UpdateRequisitions from '../../../services/Requisitions/UpdateReq';
+import {UpdateReqs} from '../../../services/Requisitions/UpdateReq';
 
 export default function EditReqModal(props: any) {
     const { register, handleSubmit } = useForm();
     const requisition = props.requisition;
-    const controller = new UpdateRequisitions();
 
     const editRequest = async (data: any) => {
         const request = { id: requisition.id, body: { description: data.description } }
-        await controller.UpdateReqs(request);
+        await UpdateReqs(request);
         props.setTrigger();
         window.location.reload();
     }

@@ -1,47 +1,44 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import ClientModal from '../Modal/ClientModal/ClientModal';
 import styles from "./ListClients.module.css";
-import GetUserById from '../../services/User/GetUserById';
-import GetRequisitionsByContract from '../../services/Requisitions/GetReqsByContract';
+import { GetUserById } from '../../services/User/GetUserById';
 import { useNavigate } from 'react-router-dom';
 import React from 'react';
+import { useQuery } from 'react-query';
+import axios from 'axios';
 
 export default function ListClients(props: any) {
     const buttonStyle = `btn rounded-pill ${styles.buttonStyle}`;
     const [modal, setModal] = useState(false);
-    const [requests, setRequests] = useState([]);
     const [singleReq, setSingleReq] = useState();
     const [client, setClient] = useState();
-    const controllerUser = new GetUserById();
-    const controller = new GetRequisitionsByContract();
     const navigate = useNavigate();
 
 
     async function toggleModal(props: any) {
-        const user = await controllerUser.GetUserById(props.idClient);
+        const user = await GetUserById(props.idClient);
         setClient(user.data.body);
         setSingleReq(props);
         setModal(!modal);
     }
 
-    useEffect(() => {
-        const getUsersFromType = async () => {
-            const user = localStorage.getItem("user_token") || "";
-            const userId = JSON.parse(user).id;
-            const data = { id: userId, contract: "A", status: "Active" }
-            const response = await controller.GetReqsByContract(data)
-            const usersList = response.data.body;
-            setRequests(usersList);
-        }
-        getUsersFromType()
-    }, [])
+    const { data, isFetching } = useQuery('clients', async () => {
+        const user = localStorage.getItem("user_token") || "";
+        const userId = JSON.parse(user).id;
+        const payload = await axios.get(`http://localhost:8080/requests/findbycontract/${userId}/A/Active`);
+        return payload.data.body;
+    }, {
+        staleTime: 1000 * 30
+    })
+
 
     return (
         <>
             <ClientModal trigger={modal} setTrigger={toggleModal} requisition={singleReq} client={client}></ClientModal>
             <div className={styles.tableStyle}>
                 <h1>Propostas de Clientes</h1>
+                {isFetching && <p>Carregando...</p>}
                 <div className={styles.divBtn}>
                     <button className={buttonStyle} onClick={() => navigate("/requests")}>Requisições</button>
                 </div>
@@ -56,7 +53,7 @@ export default function ListClients(props: any) {
                         </thead>
                         <tbody>
                             {
-                                requests.map((item: any) =>
+                                data?.map((item: any) =>
                                     <tr className={styles.bodyStyle} key={item.id}>
                                         <td>{item.id}</td>
                                         <td>{item.description}</td>

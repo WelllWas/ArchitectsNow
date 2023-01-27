@@ -1,11 +1,12 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import styles from "./ListRequests.module.css";
 import { useNavigate } from 'react-router-dom';
 import EditReqModal from '../Modal/EditReqModal/EditReqModal';
 import DeleteReqModal from '../Modal/DeleteReqModal/DeleteReqModal';
-import GetRequisitionsByContract from '../../services/Requisitions/GetReqsByContract';
 import React from 'react';
+import { useQuery } from 'react-query';
+import axios from 'axios';
 
 export default function ListRequests(props: any) {
     const buttonStyle = `btn rounded-pill ${styles.buttonStyle}`;
@@ -13,11 +14,9 @@ export default function ListRequests(props: any) {
     const buttonStyleBack = `btn btn-danger ${styles.buttonStyleBack}`;
     const [modal, setModal] = useState(false);
     const [modalDelete, setModalDelete] = useState(false);
-    const [request, setRequest] = useState([]);
     const [singleRequest, setSingleRequest] = useState([]);
     const [userType, setUserType] = useState("");
     const navigate = useNavigate();
-    const controller = new GetRequisitionsByContract();
     let type: string;
 
     async function toggleModal(props: any) {
@@ -30,20 +29,17 @@ export default function ListRequests(props: any) {
         setModalDelete(!modalDelete);
     }
 
-    useEffect(() => {
-        const getUsersFromType = async () => {
-            const user = localStorage.getItem("user_token") || "";
-            const userId = JSON.parse(user).id;
-            const parsedType = JSON.parse(user).type;
-            type = parsedType;
-            setUserType(type);
-            const data = { id: userId, contract: type, status: "NoFilter" }
-            const response = await controller.GetReqsByContract(data)
-            const usersList = response.data.body;
-            setRequest(usersList);
-        }
-        getUsersFromType()
-    }, [])
+    const { data, isFetching } = useQuery('requests', async () => {
+        const user = localStorage.getItem("user_token") || "";
+        const userId = JSON.parse(user).id;
+        const parsedType = JSON.parse(user).type;
+        type = parsedType;
+        setUserType(type);
+        const payload = await axios.get(`http://localhost:8080/requests/findbycontract/${userId}/${type}/NoFilter`);
+        return payload.data.body;
+    }, {
+        staleTime: 1000 * 30
+    })
 
     return (
         <>
@@ -51,6 +47,7 @@ export default function ListRequests(props: any) {
             <DeleteReqModal trigger={modalDelete} setTrigger={toggleModalDelete} requisition={singleRequest}></DeleteReqModal>
             <div className={styles.tableStyle}>
                 <h1>Todas as Requisições</h1>
+                {isFetching && <p>Carregando...</p>}
                 <div>
                     <table className="table table-bordered">
                         <thead className={styles.theadStyle}>
@@ -65,7 +62,7 @@ export default function ListRequests(props: any) {
                         <tbody>
                             {
 
-                                request.map((item: any) =>
+                                data?.map((item: any) =>
                                     <tr className={styles.bodyStyle} key={item.id}>
                                         <td>{item.id}</td>
                                         <td>{item.description}</td>

@@ -1,14 +1,13 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import styles from "./DeleteReqModal.module.css";
 import React from 'react';
-import DeleteRequisitions from '../../../services/Requisitions/DeleteReq';
+import {DeleteReqs} from '../../../services/Requisitions/DeleteReq';
 
 export default function DeleteReqModal(props: any) {
-    const controller = new DeleteRequisitions();
     const requisition = props.requisition;
 
     async function deleteRequest(){
-        await controller.DeleteReqs(requisition);
+        await DeleteReqs(requisition);
         props.setTrigger();
         window.location.reload();
     }

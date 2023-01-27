@@ -1,6 +1,12 @@
 .loginForm {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.title {
+  margin-top: 10vh;
+  position: absolute;
+ margin-left: 42%;
+}

@@ -1,19 +1,18 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import styles from "./ArcModal.module.css";
 import { useForm } from 'react-hook-form';
+import {CreateReqs} from '../../../services/Requisitions/CreateReqs';
 import React from 'react';
-import CreateRequisitions from '../../../services/Requisitions/CreateReqs';
 
 export default function AdvModal(props: any) {
     const { register, handleSubmit } = useForm();
     const architect = props.architect;
-    const controller = new CreateRequisitions();
 
     const createRequest = async (data: any) => {
         const user = localStorage.getItem("user_token") || "";
         const clientId = JSON.parse(user).id;
         const request = { idClient: clientId, idArchitect: architect.id, description: data.description }
-        await controller.CreateReqs(request);
+        await CreateReqs(request);
         props.setTrigger();
     }
 

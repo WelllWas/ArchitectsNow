@@ -4,7 +4,7 @@ import useAuth from '../../Authorization/UseAuth';
 import { useNavigate } from 'react-router-dom';
 import styles from './RegisterForm.module.css'
 import React, { useState } from 'react';
-import RegisterUser from '../../services/Login/RegisterUser';
+import {Register} from '../../services/Login/RegisterUser';
 import ErrorModal from '../Modal/ErrorModal/ErrorModal';
 
 export default function RegisterForm() {
@@ -13,14 +13,13 @@ export default function RegisterForm() {
     const [error, setError] = useState();
     const { signIn } = useAuth();
     const navigate = useNavigate();
-    const controller = new RegisterUser();
 
     function toggleModal() {
         setModal(!modal);
     }
 
     const login = async (data: any) => {
-        const response = await controller.Register(data)
+        const response = await Register(data)
         if (response.data.statusCode == 201) {
             signIn(response.data.body);
             navigate("/Home");
